@@ -135,8 +135,20 @@ In the Render dashboard, create a Blueprint from this repository and set these e
 - `CLOUDINARY_CLOUD_NAME` — the company Cloudinary cloud name
 - `CLOUDINARY_API_KEY` — the company Cloudinary API key
 - `CLOUDINARY_API_SECRET` — the company Cloudinary API secret
+- `FRONTEND_ORIGIN` — the exact GoDaddy frontend URL, such as `https://www.example.com`
 
 Render supplies `PORT` automatically. Do not commit `.env` or any service credentials.
+
+For a separate GoDaddy frontend, set `VITE_API_BASE_URL` to the public Render
+backend URL followed by `/api` before building the client. For example:
+
+```sh
+VITE_API_BASE_URL=https://authe-cars.onrender.com/api npm run build -w client
+```
+
+Upload the resulting `client/dist/` contents to the GoDaddy hosting document
+root. Configure `FRONTEND_ORIGIN` in Render with the exact frontend origin,
+without a trailing slash.
 
 ### Import vehicle pictures into MongoDB and Cloudinary
 

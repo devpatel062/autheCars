@@ -11,6 +11,26 @@ dotenv.config({ path: new URL("../.env", import.meta.url) });
 
 const app = express();
 const port = process.env.PORT || 4000;
+
+const allowedOrigins = (process.env.FRONTEND_ORIGIN || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use((request, response, next) => {
+  const origin = request.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    response.setHeader("Access-Control-Allow-Origin", origin);
+    response.setHeader("Vary", "Origin");
+  }
+  if (request.method === "OPTIONS") {
+    response.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+    response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    return response.sendStatus(204);
+  }
+  next();
+});
+
 app.use(express.json({ limit: "16kb" }));
 
 app.get("/api/health", (request, response) => response.json({ status: "ok" }));
