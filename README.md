@@ -125,6 +125,34 @@ npm start
 
 Open http://127.0.0.1:4000/. The backend serves both the built React app and the API on port 4000 (or `PORT` from `.env`). Keep MongoDB running. Rebuild after changing the frontend. These commands run the production build locally; they do not publish the website to the internet.
 
+### Deploy to Render
+
+This repository includes a `render.yaml` Blueprint for a single Render web service. The service builds the React client and runs the Express server, which serves both the API and the production frontend.
+
+In the Render dashboard, create a Blueprint from this repository and set these environment variables on the service:
+
+- `MONGODB_URI` — the company MongoDB Atlas connection string
+- `CLOUDINARY_CLOUD_NAME` — the company Cloudinary cloud name
+- `CLOUDINARY_API_KEY` — the company Cloudinary API key
+- `CLOUDINARY_API_SECRET` — the company Cloudinary API secret
+
+Render supplies `PORT` automatically. Do not commit `.env` or any service credentials.
+
+### Import vehicle pictures into MongoDB and Cloudinary
+
+Place the source pictures in the `data/` folder using the filenames already
+listed in `server/importVehicles.js`. Set the company MongoDB and Cloudinary
+variables in the root `.env`, then run:
+
+```sh
+npm run import:vehicles
+```
+
+The command uploads each picture to Cloudinary and upserts its vehicle record
+in MongoDB with the returned secure URL. It is safe to run again: the same
+vehicle IDs and Cloudinary public IDs are overwritten instead of duplicated.
+Fields that were not readable from the source pictures remain unset.
+
 ## Troubleshooting
 
 - **`Set MONGODB_URI in the root .env file.`** — create `.env` inside `emperic`, alongside the root `package.json`, and set the connection string.

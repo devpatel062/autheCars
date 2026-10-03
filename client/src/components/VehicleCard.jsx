@@ -23,7 +23,9 @@ export default function VehicleCard({ vehicle, onSelect }) {
         </div>
         <div className="muted small">
           <Gauge />
-          {vehicle.mileage.toLocaleString()} miles
+          {vehicle.mileage == null
+            ? "Mileage unavailable"
+            : `${vehicle.mileage.toLocaleString()} miles`}
         </div>
         <div className="specs">
           {[

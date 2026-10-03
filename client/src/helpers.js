@@ -5,7 +5,7 @@ const currencyFormatter = new Intl.NumberFormat("en-GB", {
 });
 
 export function formatCurrency(amount) {
-  return currencyFormatter.format(amount);
+  return amount == null ? "Price on request" : currencyFormatter.format(amount);
 }
 
 export function matchesVehicleFilters(vehicle, filters) {

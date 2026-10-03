@@ -52,7 +52,10 @@ export default function EnquiryModal({ modal, close }) {
           <div className="section-heading">
             <h2>{formatCurrency(vehicle.price)}</h2>
             <span>
-              {vehicle.mileage.toLocaleString()} miles · {vehicle.fuel}
+              {vehicle.mileage == null
+                ? "Mileage unavailable"
+                : `${vehicle.mileage.toLocaleString()} miles`}
+              {vehicle.fuel ? ` · ${vehicle.fuel}` : ""}
             </span>
           </div>
           <p>

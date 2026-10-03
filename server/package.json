@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch server.js",
+    "import:vehicles": "node importVehicles.js",
     "start": "node server.js",
     "seed": "node seed.js"
   },
   "dependencies": {
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "cloudinary": "^2.7.0",
     "mongoose": "^8.15.0"
   }
 }
